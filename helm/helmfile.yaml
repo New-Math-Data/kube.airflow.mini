@@ -1,0 +1,10 @@
+repositories:
+  - name: stable
+    url: http://storage.googleapis.com/kubernetes-charts
+
+releases:
+  - name: airflow
+    namespace: airflow
+    version: 2.7.1
+    values:
+        - config/airflow.yaml

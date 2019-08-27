@@ -1,0 +1,39 @@
+airflow:
+  image:
+     repository: airflow-docker-local
+     tag: 0.1.1-8
+  executor: Kubernetes
+  service:
+    type: LoadBalancer
+  config:
+    AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+    AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
+    AIRFLOW__CORE__FAB_LOGGING_LEVEL: WARN
+
+    AIRFLOW__WEBSERVER__NAVBAR_COLOR: "#123456"
+
+    AIRFLOW__KUBERNETES__WORKER_CONTAINER_REPOSITORY: airflow-docker-local
+    AIRFLOW__KUBERNETES__WORKER_CONTAINER_TAG: 0.1.1-8
+    AIRFLOW__KUBERNETES__WORKER_CONTAINER_IMAGE_PULL_POLICY: IfNotPresent
+
+    AIRFLOW__KUBERNETES__DELETE_WORKER_PODS: "False"
+    AIRFLOW__KUBERNETES__DAGS_IN_IMAGE: "False"
+
+    AIRFLOW__KUBERNETES__WORKER_SERVICE_ACCOUNT_NAME: airflow
+    AIRFLOW__KUBERNETES__DAGS_VOLUME_CLAIM: airflow
+    AIRFLOW__KUBERNETES__NAMESPACE: airflow
+
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:airflow@airflow-postgresql:5432/airflow
+
+persistence:
+  enabled: true
+  existingClaim: ''
+
+workers:
+  enabled: false
+
+postgresql:
+  enabled: true
+
+redis:
+  enabled: false
